@@ -9,7 +9,7 @@ const { mongoose } = require('../configs/dbConnection')
 const RoomSchema = new mongoose.Schema({
 
     roomNumber: {
-        type: BigInt,
+        type: Number,
         required: true,
         unique: true,
     },
@@ -18,7 +18,7 @@ const RoomSchema = new mongoose.Schema({
     image: String,
 
     bedType: {
-        type: BigInt,
+        type: Number,
         required: true,
         enum: [1, 2, 3, 4]
     },

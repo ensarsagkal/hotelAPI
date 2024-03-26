@@ -38,6 +38,10 @@ const ReservationSchema = new mongoose.Schema({
 
    },
 
+    guestNumber: {
+        type: Number,
+        default: 1
+    },
     night: {
         type: Number,
         default: 1
