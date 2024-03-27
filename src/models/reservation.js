@@ -20,16 +20,11 @@ const ReservationSchema = new mongoose.Schema({
         required: true,
     },
 
-   arrivalDate:{
-    type:Date,
-    required:true,
-    default: function(){
-        const now = new Date();
-        // const today = now.toISOString().split('T')[0]
-        // console.log(today)
-        return  new Date(now.getDate(), now.getMonth(), now.getFullYear());;}
-
-   },
+    arrivalDate: {
+        type: Date,
+        required: true,
+        default: Date.now // Şu anki tarih olarak ayarla
+     },
    departureDate:{
     type:Date,
     required:true,
@@ -50,8 +45,12 @@ const ReservationSchema = new mongoose.Schema({
     },
     night: {
         type: Number,
-        default: 1
-    },
+        set: function() {
+          const timeDifference = this.departureDate - this.arrivalDate;
+          return Math.ceil(Number(timeDifference) / (1000 * 60 * 60 * 24));
+        }
+      },
+      
 
     price: {
         type: Number,
