@@ -23,10 +23,11 @@ const ReservationSchema = new mongoose.Schema({
    arrivalDate:{
     type:Date,
     required:true,
-    default:function(){
-        const now= new Date();
-        return new Date(now.getFullYear(),now.getMonth() ,now.getDate())
-    }
+    default: function(){
+        const now = new Date();
+        const today = now.toISOString().split('T')[0]
+        console.log(today)
+        return today;}
 
    },
    departureDate:{
