@@ -25,9 +25,9 @@ const ReservationSchema = new mongoose.Schema({
     required:true,
     default: function(){
         const now = new Date();
-        const today = now.toISOString().split('T')[0]
-        console.log(today)
-        return today;}
+        // const today = now.toISOString().split('T')[0]
+        // console.log(today)
+        return  new Date(now.getDate(), now.getMonth(), now.getFullYear());;}
 
    },
    departureDate:{
@@ -36,7 +36,8 @@ const ReservationSchema = new mongoose.Schema({
     validate: {
         validator: function(date) {
             // departureDate'in arrivalDate'den sonra olduğunu kontrol et
-            return date.getTime() > this.arrivalDate.getTime();
+            return date > this.arrivalDate
+            ;
         },
         message: 'departureDate must be later than arrivalDate'
     }
