@@ -18,13 +18,15 @@ module.exports = async (req, res, next) => {
             const tokenData = await Token.findOne({ token: tokenKey[1] }).populate('userId')
             req.user = tokenData ? tokenData.userId : false
         }else if(tokenKey[0]=="Bearer"){
-            jwt.verify(tokenKey[1],process.env.ACCES_KEY,(error,accessData))
+            jwt.verify(tokenKey[1],process.env.ACCESS_KEY,function(error,accessData){
+                req.user= accessData? accessData: false
+            })
             // if(accessData){
             //     req.user=accessData
             // }else{
             //     req.user= false
             // }
-            req.user= accessData? accessData: false
+           
         }
     }
     next()
