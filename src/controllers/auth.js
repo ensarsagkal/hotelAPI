@@ -101,7 +101,29 @@ module.exports = {
         }
 
     },
-    refresh: async(req,res)=>{},
+    refresh: async(req,res)=>{
+          /*
+            #swagger.tags = ["Authentication"]
+            #swagger.summary = "JWT: Refresh"
+            #swagger.description = 'Refresh token.'
+        */
+        const refreshToken=req.body.bearer.refresh
+        if(refreshToken){
+           const  refreshData= await jwt.verify(refreshToken,process.env.REFRESH_KEY)
+           if(refreshData){
+            const user= await User.findOne({_id:refreshData._id})
+            if(user&& user.password==refreshData.password){
+                res.status(200).send({
+                    error:false,
+                    bearer:{
+                        access:jwt.sign(accessInfo.data,accessInfo.key,{expiresIn:accessInfo.time})
+                    }
+                })
+            }
+           }
+        }
+
+    },
     logout: async (req, res) => {
         /*
             #swagger.tags = ["Authentication"]
@@ -111,13 +133,20 @@ module.exports = {
 
         const auth = req.headers?.authorization // Token ...tokenKey...
         const tokenKey = auth ? auth.split(' ') : null // ['Token', '...tokenKey...']
-        const result = await Token.deleteOne({ token: tokenKey[1] })
-
+        
+        if(tokenKey[0]=="Token"){
+         const result = await Token.deleteOne({ token: tokenKey[1] })
         res.send({
             error: false,
             message: 'Token deleted. Logout was OK.',
             result
         })
+    }else{
+        res.send({
+            error:false,
+            message:"No need to JWT for Logout "
+        })
+    }
     }
 
 }
