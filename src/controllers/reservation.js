@@ -41,6 +41,7 @@ module.exports = {
         */
         if(!req.body?.price){
             const roomData= await Room.findOne({_id:req.body.roomId})
+            req.body.price=roomData.price
         }
         const data = await Reservation.create(req.body)
 
