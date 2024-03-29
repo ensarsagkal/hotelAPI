@@ -56,8 +56,14 @@ module.exports = {
             #swagger.tags = ["Reservations"]
             #swagger.summary = "Get Single Reservation"
         */
+            let filter={}
+            if(!req.user.isAdmin){
+             filter={
+                 _id:req.user._id
+             }
+            }
 
-        const data = await Reservation.findOne({ _id: req.params.id }).populate(['userId', 'roomId'])
+        const data = await Reservation.findOne({ _id: req.params.id,...filter }).populate(['userId', 'roomId'])
 
         res.status(200).send({
             error: false,
