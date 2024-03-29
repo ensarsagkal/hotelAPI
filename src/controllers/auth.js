@@ -7,6 +7,7 @@
 const User = require('../models/user')
 const Token = require('../models/token')
 const passwordEncrypt = require('../helpers/passwordEncrypt')
+const jwt=require("jsonwebtoken")
 
 module.exports = {
 
@@ -45,6 +46,32 @@ module.exports = {
                     })
 
                     /* SIMPLE TOKEN */
+                    /* JWT */
+                    const accessInfo={
+                        key:process.env.ACCESS_KEY,
+                        time:process.env?.ACCES_EXP ||"30m",
+                        data:{
+                            _id:user._id,
+                            id:user.id,
+                            username:user.username,
+                            email:user.email,
+                            password:user.password,
+                            isActive:user.isActive,
+                            isAdmin:user.isAdmin,
+                        }
+                    }
+                    const refreshInfo={
+                        key:process.env.REFRESH_KEY,
+                        time:process.env?.REFRESH_EXP ||"30d",
+                        data:{
+                            _id:user._id,
+                            password:user.password
+
+                        }
+                    }
+                    const accessToken= jwt.sign(accessInfo.data,accessInfo.key,{expiresIn:accessInfo.time})
+                    const refreshToken= jwt.sign(refreshInfo.data,refreshInfo.key,{expiresIn:refreshInfo.time})
+                    /* JWT */
 
                     res.status(200).send({
                         error: false,
