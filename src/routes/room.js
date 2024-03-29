@@ -9,15 +9,15 @@ const router = require('express').Router()
 const room = require('../controllers/room')
 const permission= require("../middlewares/permissions")  
 // URL: /rooms
-
+const upload = require('../middlewares/upload')
 router.route('/')
     .get(permission.isLogin, room.list)
-    .post(permission.isAdmin,room.create)
+    .post(permission.isAdmin,upload.array('images'),room.create)
 
 router.route('/:id')
     .get(permission.isLogin,room.read)
-    .put(permission.isAdmin,room.update)
-    .patch(permission.isAdmin,room.update)
+    .put(permission.isAdmin,upload.array('images'),room.update)
+    .patch(permission.isAdmin,upload.array('images'),room.update)
     .delete(permission.isAdmin,room.delete)
 
 /* ------------------------------------------------------- */
