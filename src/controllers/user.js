@@ -3,6 +3,7 @@
     NODEJS EXPRESS | CLARUSWAY FullStack Team
 ------------------------------------------------------- */
 const User= require("../models/user")
+const sendMail=require("../helpers/sendMail")
 module.exports={
     
     list:async(req,res)=>{
@@ -32,6 +33,14 @@ module.exports={
             #swagger.tags = ["Users"]
             #swagger.summary = "Create User"
         */
+            sendMail(
+                data.email,
+                "welcome",
+                `
+                <h1>welcome ${data.username}</h1>
+                <p>welcome to our system</p>
+                `
+            )
        const data = await User.create(req.body)
        res.status(201).send({
         error:false,

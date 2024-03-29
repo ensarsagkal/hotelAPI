@@ -8,8 +8,8 @@ const user= require("../controllers/user")
 const permission= require("../middlewares/permissions")  
 
 router.route("/")
-.get(permission.isAdmin,user.list)
-.post(permission.isLogin,user.create)
+.get(permission.isLogin,user.list)
+.post(permission.isAdmin,user.create)
 
 
 router.route("/:id")

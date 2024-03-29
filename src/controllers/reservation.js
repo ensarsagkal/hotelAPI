@@ -6,6 +6,7 @@
 
 const Reservation = require('../models/reservation')
 const Room= require("../models/room")
+const sendMail=require("../helpers/sendMail")
 module.exports = {
 
     list: async (req, res) => {
@@ -44,6 +45,14 @@ module.exports = {
             req.body.price=roomData.price
         }
         const data = await Reservation.create(req.body)
+        sendMail(
+            data.email, // to
+            'Rezervasyon yapılmıştır', // subject
+            // Message
+            `
+                <p>Rezervasyon yapılmıştır</p>
+            `
+        )
 
         res.status(201).send({
             error: false,
