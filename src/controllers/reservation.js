@@ -5,7 +5,7 @@
 // Reservation Controller:
 
 const Reservation = require('../models/reservation')
-
+const Room= require("../models/room")
 module.exports = {
 
     list: async (req, res) => {
@@ -39,7 +39,9 @@ module.exports = {
             #swagger.tags = ["Reservations"]
             #swagger.summary = "Create Reservation"
         */
-
+        if(!req.body?.price){
+            const roomData= await Room.findOne({_id:req.body.roomId})
+        }
         const data = await Reservation.create(req.body)
 
         res.status(201).send({
