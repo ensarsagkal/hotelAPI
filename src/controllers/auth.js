@@ -76,6 +76,10 @@ module.exports = {
                     res.status(200).send({
                         error: false,
                         token: tokenData.token,
+                        bearer:{
+                            access:accessToken,
+                            refresh:refreshToken
+                        },
                         user
                     })
 
@@ -97,7 +101,7 @@ module.exports = {
         }
 
     },
-
+    refresh: async(req,res)=>{},
     logout: async (req, res) => {
         /*
             #swagger.tags = ["Authentication"]
