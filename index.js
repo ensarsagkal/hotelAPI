@@ -66,6 +66,8 @@ app.all('/', (req, res) => {
 })
 
 /* ------------------------------------------------------- */
+// app.use("/uploads",express.static("./"))
+/* ------------------------------------------------------- */
 
 // errorHandler:
 app.use(require('./src/middlewares/errorHandler'))
