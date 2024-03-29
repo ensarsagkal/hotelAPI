@@ -7,18 +7,18 @@ const router = require('express').Router()
 // routes/reservations:
 
 const reservation = require('../controllers/reservation')
-
+const {isLogin, isAdmin}= require("../middlewares/permissions")
 // URL: /orders
 
 router.route('/')
-    .get(reservation.list)
-    .post(reservation.create)
+    .get(isAdmin,reservation.list)
+    .post(isLogin,reservation.create)
 
 router.route('/:id')
-    .get(reservation.read)
-    .put(reservation.update)
-    .patch(reservation.update)
-    .delete(reservation.delete)
+    .get(isLogin,reservation.read)
+    .put(isAdmin,reservation.update)
+    .patch(isAdmin,reservation.update)
+    .delete(isAdmin,reservation.delete)
 
 /* ------------------------------------------------------- */
 module.exports = router
