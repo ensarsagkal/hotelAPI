@@ -9,7 +9,7 @@ module.exports= function (to,subject,message) {
 const transporter=nodemailer.createTransport({
     service:"gmail",
     auth:{
-        user:"....",
+        user:"ensarsagkal@gmail.com",
         pass:"ypop huad lwqc liih"
     }
 })
