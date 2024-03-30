@@ -45,6 +45,7 @@ module.exports = {
             req.body.price=roomData.price
         }
         const data = await Reservation.create(req.body)
+        console.log(data)
         sendMail(
             data.email, // to
             'Rezervasyon yapılmıştır', // subject

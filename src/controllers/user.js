@@ -32,7 +32,10 @@ module.exports={
          /*
             #swagger.tags = ["Users"]
             #swagger.summary = "Create User"
+
         */
+            const data = await User.create(req.body)
+            console.log(data.email)
             sendMail(
                 data.email,
                 "welcome",
@@ -41,7 +44,8 @@ module.exports={
                 <p>welcome to our system</p>
                 `
             )
-       const data = await User.create(req.body)
+          
+  
        res.status(201).send({
         error:false,
         data
