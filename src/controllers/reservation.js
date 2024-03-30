@@ -45,15 +45,15 @@ module.exports = {
             req.body.price=roomData.price
         }
         const data = await Reservation.create(req.body)
-        console.log(data)
-        sendMail(
-            data.email, // to
-            'Rezervasyon yapılmıştır', // subject
-            // Message
-            `
-                <p>Rezervasyon yapılmıştır</p>
-            `
-        )
+    
+        // sendMail(
+        //     data.email, // to
+        //     'Rezervasyon yapılmıştır', // subject
+        //     // Message
+        //     `
+        //         <p>Rezervasyon yapılmıştır</p>
+        //     `
+        // )
 
         res.status(201).send({
             error: false,
